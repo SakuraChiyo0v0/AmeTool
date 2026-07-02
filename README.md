@@ -46,6 +46,25 @@ npm run build
 npm run preview
 ```
 
+## Docker 部署
+
+```bash
+# 一键启动（构建 + 运行）
+docker compose up -d
+
+# 访问 http://localhost:3000
+
+# 重新构建（代码更新后）
+docker compose up -d --build
+```
+
+也可单独构建镜像：
+
+```bash
+docker build -t ame-tool .
+docker run -d -p 3000:80 --name ame-tool ame-tool
+```
+
 ## License
 
 MIT
