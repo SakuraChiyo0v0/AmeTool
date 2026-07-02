@@ -1,0 +1,7 @@
+services:
+  ame-tool:
+    build: .
+    container_name: ame-tool
+    ports:
+      - "3000:80"
+    restart: unless-stopped

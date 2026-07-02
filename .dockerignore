@@ -1,0 +1,16 @@
+node_modules
+dist
+.git
+.env
+.env.*
+*.local
+.vscode
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sw?
+.DS_Store
+Thumbs.db
+tsconfig.app.tsbuildinfo
+.workbuddy
