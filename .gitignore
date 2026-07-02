@@ -1,0 +1,21 @@
+node_modules
+dist
+*.local
+.env
+.env.*
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sw?
+
+# TypeScript build info
+tsconfig.app.tsbuildinfo
+
+# OS files
+.DS_Store
+Thumbs.db
