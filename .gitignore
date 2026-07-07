@@ -16,6 +16,10 @@ dist
 # TypeScript build info
 tsconfig.app.tsbuildinfo
 
+# Local agent/tooling files
+.opencode/
+.workbuddy/
+
 # OS files
 .DS_Store
 Thumbs.db
