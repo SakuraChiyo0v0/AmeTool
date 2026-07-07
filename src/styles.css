@@ -701,6 +701,118 @@ a { color: inherit; }
   gap: 8px;
 }
 
+/* ========== MCP Inspector ========== */
+.mcp-input-section,
+.mcp-output-section {
+  display: grid;
+  gap: 14px;
+}
+.mcp-config-input {
+  min-height: 420px;
+}
+.mcp-controls {
+  align-items: stretch;
+}
+.mcp-warning {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border: 1px solid color-mix(in srgb, var(--warning), transparent 50%);
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--warning), transparent 88%);
+  color: var(--text);
+  font-size: 13px;
+}
+.mcp-overview-card {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+}
+.mcp-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.mcp-info-grid div {
+  display: grid;
+  gap: 6px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  min-width: 0;
+}
+.mcp-info-grid .wide {
+  grid-column: 1 / -1;
+}
+.mcp-info-grid span,
+.mcp-empty {
+  color: var(--muted);
+  font-size: 13px;
+}
+.mcp-info-grid b,
+.mcp-info-grid code {
+  overflow-wrap: anywhere;
+  font-size: 13px;
+}
+.mcp-header-list {
+  display: grid;
+  gap: 8px;
+}
+.mcp-header-list code {
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  overflow-wrap: anywhere;
+}
+.mcp-probe-list {
+  display: grid;
+  gap: 10px;
+}
+.mcp-probe-item {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+}
+.mcp-probe-item > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+.mcp-probe-item span {
+  color: var(--muted);
+  font-size: 13px;
+  text-align: right;
+}
+.mcp-probe-item.success {
+  border-color: color-mix(in srgb, var(--success), transparent 55%);
+}
+.mcp-probe-item.error {
+  border-color: color-mix(in srgb, var(--danger), transparent 55%);
+}
+.mcp-probe-item.running {
+  border-color: color-mix(in srgb, var(--accent), transparent 55%);
+}
+.mcp-probe-item pre {
+  max-height: 260px;
+  overflow: auto;
+  margin: 0;
+  padding: 12px;
+  border-radius: 10px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
 /* ========== QR Code Generator ========== */
 .qrcode-tool {
   display: grid;

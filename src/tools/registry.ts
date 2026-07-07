@@ -21,6 +21,7 @@ import {
   FileCode2,
   Film,
   Dices,
+  ServerCog,
 } from 'lucide-react'
 
 // ============================================================
@@ -71,6 +72,7 @@ export const toolCategories: ToolCategory[] = [
   { id: 'debug', name: '调试工具', icon: Keyboard, subcategories: [
     { id: 'tester', name: '硬件检测' },
     { id: 'reaction', name: '反应测试' },
+    { id: 'protocol', name: '协议探测' },
   ]},
 ]
 
@@ -290,6 +292,18 @@ export const toolRegistry: ToolDefinition[] = [
     subcategory: 'reaction',
     tags: ['反应', '速度', '测试', '反应时间'],
     component: lazy(() => import('../pages/ReactionTestTool')),
+  },
+  {
+    id: 'mcp-inspector',
+    name: 'MCP 探测器',
+    description: '粘贴 MCP JSON 配置，解析服务地址、鉴权头和传输类型，并尝试探测工具、资源、提示词等接口能力。',
+    eyebrow: 'MCP Inspector',
+    status: 'available',
+    icon: ServerCog,
+    category: 'debug',
+    subcategory: 'protocol',
+    tags: ['MCP', 'JSON-RPC', '接口探测', '协议', '工具列表'],
+    component: lazy(() => import('../pages/McpInspectorTool')),
   },
   {
     id: 'base64-image',
