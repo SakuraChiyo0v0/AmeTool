@@ -261,7 +261,7 @@ export default function IdCardTool() {
               </div>
               <div className="id-card-info-card">
                 <span className="id-card-info-label">年龄</span>
-                <span className="id-card-info-value">{result?.age !== null ? `${result.age} 岁` : '—'}</span>
+                <span className="id-card-info-value">{result?.age != null ? `${result.age} 岁` : '—'}</span>
               </div>
             </div>
 

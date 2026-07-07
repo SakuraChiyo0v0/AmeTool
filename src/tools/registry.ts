@@ -8,7 +8,6 @@ import {
   Key,
   Palette,
   QrCode,
-  Type,
   TrendingUp,
   Wrench,
   Landmark,
@@ -46,10 +45,6 @@ export const toolCategories: ToolCategory[] = [
   ]},
   { id: 'text', name: '文本工具', icon: FileText, subcategories: [
     { id: 'format', name: '格式化' },
-    { id: 'process', name: '文本处理' },
-  ]},
-  { id: 'encode', name: '编码转换', icon: Type, subcategories: [
-    { id: 'convert', name: '编码转换' },
   ]},
   { id: 'calculator', name: '数学计算', icon: Calculator, subcategories: [
     { id: 'basic', name: '基础计算' },
@@ -330,28 +325,6 @@ export const toolRegistry: ToolDefinition[] = [
     subcategory: 'gif',
     tags: ['GIF', '动图', '帧拆分', '视频转GIF', '变速', '倒放'],
     component: lazy(() => import('../pages/GifTool')),
-  },
-  {
-    id: 'text',
-    name: '文本工具',
-    description: 'JSON 格式化、Base64 编解码、正则测试等文本处理功能。',
-    eyebrow: 'Text Tool',
-    status: 'coming-soon',
-    icon: FileText,
-    category: 'text',
-    subcategory: 'process',
-    tags: ['文本', '格式化', '编解码'],
-  },
-  {
-    id: 'encode',
-    name: '编码转换',
-    description: 'Unicode、URL 编码、HTML 实体转换等常见编码互转。',
-    eyebrow: 'Encoding',
-    status: 'coming-soon',
-    icon: Type,
-    category: 'encode',
-    subcategory: 'convert',
-    tags: ['编码', '转换'],
   },
   ]
 
