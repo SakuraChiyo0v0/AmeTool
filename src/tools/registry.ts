@@ -22,6 +22,9 @@ import {
   Film,
   Dices,
   ServerCog,
+  Plug,
+  Code2,
+  Terminal,
 } from 'lucide-react'
 
 // ============================================================
@@ -73,6 +76,10 @@ export const toolCategories: ToolCategory[] = [
     { id: 'tester', name: '硬件检测' },
     { id: 'reaction', name: '反应测试' },
     { id: 'protocol', name: '协议探测' },
+  ]},
+  { id: 'dev', name: '开发工具', icon: Code2, subcategories: [
+    { id: 'api', name: 'API 检测' },
+    { id: 'curl', name: 'CURL 请求' },
   ]},
 ]
 
@@ -352,6 +359,30 @@ export const toolRegistry: ToolDefinition[] = [
     subcategory: 'gif',
     tags: ['GIF', '动图', '帧拆分', '视频转GIF', '变速', '倒放'],
     component: lazy(() => import('../pages/GifTool')),
+  },
+  {
+    id: 'model-api-checker',
+    name: 'AI 模型 API 检测',
+    description: '检测大模型 API 的连通性、模型列表和余额查询，支持 OpenAI / DeepSeek / 智谱 / 硅基流动等主流提供商。',
+    eyebrow: 'Model API Checker',
+    status: 'available',
+    icon: Plug,
+    category: 'dev',
+    subcategory: 'api',
+    tags: ['AI', 'API', 'LLM', '密钥', '连通性', '余额', '模型列表', 'OpenAI', 'DeepSeek'],
+    component: lazy(() => import('../pages/ModelApiChecker')),
+  },
+  {
+    id: 'curl-runner',
+    name: 'CURL 请求工具',
+    description: '粘贴 curl 命令自动解析，支持 $VAR / ${VAR} 全局变量，自动生成输入框并跨命令复用，一键发送 HTTP 请求并查看响应。',
+    eyebrow: 'CURL Runner',
+    status: 'available',
+    icon: Terminal,
+    category: 'dev',
+    subcategory: 'curl',
+    tags: ['curl', 'HTTP', 'API', '请求', '变量', '调试', '$VAR', '全局变量'],
+    component: lazy(() => import('../pages/CurlRunner')),
   },
   ]
 
