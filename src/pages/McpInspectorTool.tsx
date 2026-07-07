@@ -4,6 +4,7 @@ import ToolPageLayout, { WorkspaceHeader, WorkspaceSplit } from '../components/T
 
 type McpServerType = 'http' | 'sse' | 'stdio' | string
 type ProbeStatus = 'idle' | 'running' | 'success' | 'error'
+type ProbeMode = 'proxy' | 'direct'
 
 interface McpServerConfig {
   type?: McpServerType
@@ -62,7 +63,13 @@ function normalizeError(error: unknown) {
   return String(error)
 }
 
-function getProbeHint(error: string) {
+function getProbeHint(error: string, mode: ProbeMode) {
+  if (/invalid mcp url/i.test(error)) return 'MCP URL 不合法，请确认以 http:// 或 https:// 开头。'
+  if (/502|bad gateway|fetch failed|econnrefused|enotfound|etimedout|aborted/i.test(error)) {
+    return mode === 'proxy'
+      ? '本地代理无法访问该 MCP 地址，请确认内网/VPN、服务状态、URL 和鉴权配置。'
+      : '浏览器无法访问该 MCP 地址，常见原因是 CORS 未放行、HTTPS 页面请求 HTTP 地址、内网地址不可达或服务未启动。'
+  }
   if (/failed to fetch|networkerror|load failed/i.test(error)) {
     return '浏览器无法访问该 MCP 地址，常见原因是 CORS 未放行、HTTPS 页面请求 HTTP 地址、内网地址不可达或服务未启动。'
   }
@@ -72,24 +79,29 @@ function getProbeHint(error: string) {
   return error
 }
 
-async function callMcp(url: string, headers: Record<string, string>, method: string, params?: any) {
+async function callMcp(url: string, headers: Record<string, string>, method: string, params: any, mode: ProbeMode) {
   const controller = new AbortController()
   const timeout = window.setTimeout(() => controller.abort(), 10000)
+  const requestPayload = {
+    jsonrpc: '2.0',
+    id: Date.now(),
+    method,
+    params,
+  }
 
   try {
-    const response = await fetch(url, {
+    const response = await fetch(mode === 'proxy' ? '/api/mcp-proxy' : url, {
       method: 'POST',
-      headers: {
-        Accept: 'application/json, text/event-stream',
-        'Content-Type': 'application/json',
-        ...headers,
-      },
-      body: JSON.stringify({
-        jsonrpc: '2.0',
-        id: Date.now(),
-        method,
-        params,
-      }),
+      headers: mode === 'proxy'
+        ? { 'Content-Type': 'application/json' }
+        : {
+          Accept: 'application/json, text/event-stream',
+          'Content-Type': 'application/json',
+          ...headers,
+        },
+      body: mode === 'proxy'
+        ? JSON.stringify({ url, headers, payload: requestPayload })
+        : JSON.stringify(requestPayload),
       signal: controller.signal,
     })
 
@@ -139,6 +151,7 @@ export default function McpInspectorTool() {
   const [probeCalls, setProbeCalls] = useState<ProbeCall[]>([])
   const [probing, setProbing] = useState(false)
   const [copied, setCopied] = useState(false)
+  const [probeMode, setProbeMode] = useState<ProbeMode>('proxy')
 
   const parsed = useMemo(() => {
     try {
@@ -190,7 +203,7 @@ export default function McpInspectorTool() {
     for (const { method, params } of methods) {
       setProbeCalls((prev) => prev.map((item) => item.method === method ? { ...item, status: 'running', summary: '请求中...' } : item))
       try {
-        const result = await callMcp(activeServer.url, activeServer.headers || {}, method, params)
+        const result = await callMcp(activeServer.url, activeServer.headers || {}, method, params, probeMode)
         setProbeCalls((prev) => prev.map((item) => item.method === method ? {
           method,
           status: 'success',
@@ -198,7 +211,7 @@ export default function McpInspectorTool() {
           result,
         } : item))
       } catch (error) {
-        const message = getProbeHint(normalizeError(error))
+        const message = getProbeHint(normalizeError(error), probeMode)
         setProbeCalls((prev) => prev.map((item) => item.method === method ? {
           method,
           status: 'error',
@@ -209,7 +222,7 @@ export default function McpInspectorTool() {
     }
 
     setProbing(false)
-  }, [activeServer])
+  }, [activeServer, probeMode])
 
   const copySummary = useCallback(async () => {
     if (!serverSummary) return
@@ -254,6 +267,13 @@ export default function McpInspectorTool() {
                 {parsed.servers.map(([name]) => <option key={name} value={name}>{name}</option>)}
               </select>
             </div>
+            <div className="indent-control">
+              <label>探测方式</label>
+              <select className="indent-select" value={probeMode} onChange={(e) => setProbeMode(e.target.value as ProbeMode)}>
+                <option value="proxy">本地代理</option>
+                <option value="direct">浏览器直连</option>
+              </select>
+            </div>
             <div className="action-buttons">
               <button className="button secondary" onClick={copySummary} disabled={!serverSummary}>
                 {copied ? <Check size={16} /> : <Copy size={16} />}
@@ -267,6 +287,9 @@ export default function McpInspectorTool() {
           {parsed.error && <div className="json-error">{parsed.error}</div>}
           {activeServer?.type === 'stdio' && (
             <div className="mcp-warning"><ShieldAlert size={16} /> stdio MCP 需要本地进程，浏览器页面只能解析配置，不能直接启动探测。</div>
+          )}
+          {probeMode === 'proxy' && (
+            <div className="mcp-warning"><ShieldAlert size={16} /> 本地代理仅在 `npm run dev` 开发服务器中可用；静态部署环境需要额外后端代理。</div>
           )}
         </div>
       } right={
