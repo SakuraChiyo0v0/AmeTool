@@ -470,6 +470,129 @@ a { color: inherit; }
 .calc-btn.equals { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
 .calc-btn.zero { grid-column: span 2; }
 
+/* ========== Random Number Tool ========== */
+.random-tool {
+  display: grid;
+  gap: 22px;
+}
+.random-result-card {
+  display: grid;
+  gap: 16px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+}
+.random-result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+.random-result-header p {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+.random-output {
+  width: 100%;
+  min-height: 180px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  padding: 16px;
+  resize: vertical;
+  outline: 0;
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-size: 18px;
+  line-height: 1.65;
+}
+.random-output:focus {
+  border-color: var(--focus);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus), transparent 80%);
+}
+.random-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+.random-stats span {
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 13px;
+}
+.random-settings {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.random-segmented {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.random-segmented button {
+  height: 42px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  cursor: pointer;
+  color: var(--muted);
+  font-weight: 600;
+}
+.random-segmented button.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+.random-range-grid {
+  grid-template-columns: 1fr 1fr;
+}
+.random-range-grid > label {
+  grid-column: 1 / -1;
+}
+.random-options-card {
+  grid-column: span 2;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.random-options-card > label:first-child,
+.random-options-card .option-label,
+.random-options-card .random-warning {
+  grid-column: 1 / -1;
+}
+.random-warning {
+  margin: -2px 0 0;
+  color: var(--danger);
+  font-size: 13px;
+}
+.random-history {
+  display: grid;
+  gap: 10px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+.random-history button {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  padding: 10px 12px;
+  text-align: left;
+  color: var(--muted);
+  cursor: pointer;
+}
+.random-history button:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
 /* ========== JSON Formatter ========== */
 .json-tool {
   display: grid;

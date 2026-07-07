@@ -20,6 +20,7 @@ import {
   Contact,
   FileCode2,
   Film,
+  Dices,
 } from 'lucide-react'
 
 // ============================================================
@@ -217,6 +218,18 @@ export const toolRegistry: ToolDefinition[] = [
     subcategory: 'unit',
     tags: ['长度', '重量', '温度', '面积', '体积', '速度', '时间', '数据', '功率', '能量', '压力', '力', '频率', '角度'],
     component: lazy(() => import('../pages/UnitConverterTool')),
+  },
+  {
+    id: 'random-number',
+    name: '随机数生成',
+    description: '生成整数或小数随机序列，支持数量、范围、去重、排序、步长、小数位、分隔符和随机种子复现。',
+    eyebrow: 'Random Number',
+    status: 'available',
+    icon: Dices,
+    category: 'calculator',
+    subcategory: 'basic',
+    tags: ['随机数', '随机', '数字', '抽样', '整数', '小数'],
+    component: lazy(() => import('../pages/RandomNumberTool')),
   },
   {
     id: 'qrcode',
